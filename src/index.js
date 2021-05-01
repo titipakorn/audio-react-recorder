@@ -155,12 +155,13 @@ export default class AudioReactRecorder extends React.Component {
         self.tested = true
         // if this reduces to 0 we are not getting any sound
         if (!left.reduce((a, b) => a + b)) {
-          console.log('Error: There seems to be an issue with your Mic')
           // clean up;
           self.stop()
           self.stream.getTracks().forEach(function (track) {
             track.stop()
           })
+          self.start()
+          // console.log(`Let's try it again`)
           // self.context.close() // error being thrown on this line
         }
       }
@@ -274,7 +275,6 @@ export default class AudioReactRecorder extends React.Component {
 
   start = async () => {
     await this.setupMic()
-
     this.recording = true
     // reset the buffers for the new recording
     this.leftchannel.length = this.rightchannel.length = 0
